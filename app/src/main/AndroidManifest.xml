@@ -24,7 +24,10 @@
             android:name=".MainActivity"
             android:exported="true"></activity>
         <activity
-            android:name=".ui.util.ScannerActivity"
+            android:name=".ui.profile.ProfileScannerActivity"
+            android:exported="true"></activity>
+        <activity
+            android:name=".ui.queues.ActiveQueueScannerActivity"
             android:exported="true"></activity>
         <activity
             android:name=".GoogleAuthActivity"

@@ -36,7 +36,7 @@ class QueueService(
     suspend fun getQueueByUserId(userId:String):Queue{
         val request = Request.Builder()
             .get()
-            .endpoint("queue?userId="+userId)
+            .endpoint("/queue/byUserId")
             .build()
         val response = client.newCall(request).suspendEnqueue()
         return response.parseJsonResponse()

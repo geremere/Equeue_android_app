@@ -27,19 +27,19 @@
             app:destination="@id/mapSearchFragment" />
     </fragment>
 
-    <fragment
-        android:id="@+id/navigation_queue"
-        android:name="ru.hse.equeue.ui.queues.ActiveQueueFragment"
-        tools:layout="@layout/fragment_active_queue" >
-        <action
-            android:id="@+id/action_navigation_queue_to_navigation_search"
-            app:destination="@id/navigation_search"
-            app:popUpTo="@id/mobile_navigation"
-            app:popUpToInclusive="true" />
-    </fragment>
+<!--    <fragment-->
+<!--        android:id="@+id/navigation_queue"-->
+<!--        android:name="ru.hse.equeue.ui.queues.ActiveQueueFragment"-->
+<!--        tools:layout="@layout/fragment_active_queue_root" >-->
+<!--        <action-->
+<!--            android:id="@+id/action_navigation_queue_to_navigation_search"-->
+<!--            app:destination="@id/navigation_search"-->
+<!--            app:popUpTo="@id/mobile_navigation"-->
+<!--            app:popUpToInclusive="true" />-->
+<!--    </fragment>-->
 
     <fragment
-        android:id="@+id/navigation_search_list"
+        android:id="@+id/search_list"
         android:name="ru.hse.equeue.ui.search.list.ListSearchFragment"
         tools:layout="@layout/fragment_search_list">
         <action
@@ -56,7 +56,7 @@
         android:label="MapSearchFragment">
         <action
             android:id="@+id/action_navigation_search_to_navigation_search_list2"
-            app:destination="@id/navigation_search_list" />
+            app:destination="@id/search_list" />
         <action
             android:id="@+id/action_mapSearchFragment_to_queueFragment"
             app:destination="@id/queueFragment" />
@@ -91,6 +91,16 @@
         <action
             android:id="@+id/action_profileCreateQueueFragment_to_navigation_profile"
             app:destination="@id/navigation_profile"
+            app:popUpTo="@id/mobile_navigation"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_queue"
+        android:name="ru.hse.equeue.ui.queues.ActiveQueueRootFragment"
+        android:label="NotActiveQueueFragment" >
+        <action
+            android:id="@+id/action_navigation_queue_to_navigation_search"
+            app:destination="@id/navigation_search"
             app:popUpTo="@id/mobile_navigation"
             app:popUpToInclusive="true" />
     </fragment>

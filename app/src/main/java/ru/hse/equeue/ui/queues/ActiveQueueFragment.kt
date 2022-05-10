@@ -28,7 +28,6 @@ class ActiveQueueFragment : Fragment() {
     ): View {
 
         _binding = FragmentActiveQueueBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
@@ -60,7 +59,7 @@ class ActiveQueueFragment : Fragment() {
 
     private fun qrCode(id: Long) {
         val bitMatrix: BitMatrix =
-            multiFormatWriter.encode(id.toString(), BarcodeFormat.QR_CODE, 500, 500)
+            multiFormatWriter.encode(id.toString(), BarcodeFormat.QR_CODE, 720, 720)
         val barcodeEncoder: BarcodeEncoder = BarcodeEncoder()
         val bitmap: Bitmap = barcodeEncoder.createBitmap(bitMatrix)
         binding.userQrCode.setImageBitmap(bitmap)

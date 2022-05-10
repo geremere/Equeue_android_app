@@ -9,12 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import ru.hse.equeue.R
-import ru.hse.equeue.databinding.FragmentNotActiveQueueBinding
+import ru.hse.equeue.databinding.FragmentActiveQueueRootBinding
 import ru.hse.equeue.ui.profile.ProfileViewModel
 
-class NotActiveQueueFragment : Fragment() {
+class ActiveQueueRootFragment : Fragment() {
 
-    private var _binding: FragmentNotActiveQueueBinding? = null
+    private var _binding: FragmentActiveQueueRootBinding? = null
     private val activeQueueViewModel: ActiveQueueViewModel by activityViewModels()
     private val profileViewModel: ProfileViewModel by activityViewModels();
 
@@ -25,14 +25,17 @@ class NotActiveQueueFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentNotActiveQueueBinding.inflate(inflater, container, false)
+        _binding = FragmentActiveQueueRootBinding.inflate(inflater, container, false)
         activeQueueViewModel.getActiveQueue(profileViewModel.user.value?.id!!)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initBinding()
+        val ft = parentFragmentManager.beginTransaction()
+        val activeQueue: NotActiveQueueFragment = NotActiveQueueFragment()
+        ft.replace(R.id.active_queue_root, activeQueue)
+        ft.commit()
         observeQueueLoaded()
     }
 
@@ -42,16 +45,6 @@ class NotActiveQueueFragment : Fragment() {
             val activeQueue: ActiveQueueFragment = ActiveQueueFragment()
             ft.replace(R.id.active_queue_root, activeQueue)
             ft.commit()
-        }
-    }
-
-    private fun initBinding() {
-        binding.activeQueueScanQr.setOnClickListener {
-            val intent = Intent(activity, ActiveQueueScannerActivity::class.java)
-            startActivity(intent)
-        }
-        binding.goToSearchScreen.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_queue_to_navigation_search)
         }
     }
 
