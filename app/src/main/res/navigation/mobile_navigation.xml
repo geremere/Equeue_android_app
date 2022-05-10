@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_profile">
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="ru.hse.equeue.ui.profile.ProfileFragment"
+        tools:layout="@layout/fragment_profile_user_info" >
+
+        <action
+            android:id="@+id/action_navigation_profile_to_profileQueueFragment"
+            app:destination="@id/profileQueueFragment" />
+        <action
+            android:id="@+id/action_navigation_profile_to_profileCreateQueueFragment"
+            app:destination="@id/profileCreateQueueFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="ru.hse.equeue.ui.search.SearchFragment"
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_navigation_search_to_mapSearchFragment2"
+            app:destination="@id/mapSearchFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_queue"
+        android:name="ru.hse.equeue.ui.queues.ActiveQueueFragment"
+        tools:layout="@layout/fragment_active_queue" >
+        <action
+            android:id="@+id/action_navigation_queue_to_navigation_search"
+            app:destination="@id/navigation_search"
+            app:popUpTo="@id/mobile_navigation"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_search_list"
+        android:name="ru.hse.equeue.ui.search.list.ListSearchFragment"
+        tools:layout="@layout/fragment_search_list">
+        <action
+            android:id="@+id/action_navigation_search_to_mapSearchFragment2"
+            app:destination="@id/mapSearchFragment" />
+        <action
+            android:id="@+id/action_navigation_search_list_to_queueFragment"
+            app:destination="@id/queueFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/mapSearchFragment"
+        android:name="ru.hse.equeue.ui.search.map.MapSearchFragment"
+        android:label="MapSearchFragment">
+        <action
+            android:id="@+id/action_navigation_search_to_navigation_search_list2"
+            app:destination="@id/navigation_search_list" />
+        <action
+            android:id="@+id/action_mapSearchFragment_to_queueFragment"
+            app:destination="@id/queueFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/queueFragment"
+        android:name="ru.hse.equeue.ui.search.queue.QueueFragment"
+        android:label="fragment_search_queue"
+        tools:layout="@layout/fragment_search_queue" >
+        <action
+            android:id="@+id/action_queueFragment_to_navigation_queue"
+            app:popUpToInclusive="true"
+            app:popUpTo="@+id/mobile_navigation"
+            app:destination="@id/navigation_queue" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileWithOutQueueFragment"
+        android:name="ru.hse.equeue.ui.profile.ProfileWithOutQueueFragment"
+        android:label="ProfileWithOutQueueFragment" />
+    <fragment
+        android:id="@+id/profileWithQueueFragment"
+        android:name="ru.hse.equeue.ui.profile.ProfileWithQueueFragment"
+        android:label="ProfileWithQueueFragment" />
+    <fragment
+        android:id="@+id/profileQueueFragment"
+        android:name="ru.hse.equeue.ui.profile.queue.ProfileQueueFragment"
+        android:label="ProfileQueueFragment" />
+    <fragment
+        android:id="@+id/profileCreateQueueFragment"
+        android:name="ru.hse.equeue.ui.profile.queue.ProfileCreateQueueFragment"
+        android:label="ProfileCreateQueueFragment" >
+        <action
+            android:id="@+id/action_profileCreateQueueFragment_to_navigation_profile"
+            app:destination="@id/navigation_profile"
+            app:popUpTo="@id/mobile_navigation"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+</navigation>

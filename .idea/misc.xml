@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/user/AndroidStudioProjects/Equeue22/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2085" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Equeue22/app/src/main/res/drawable/button_radius.xml" value="0.156" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Equeue22/app/src/main/res/drawable/ic_account.xml" value="0.156" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Equeue22/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.2857142857142857" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Equeue22/app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.2085" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Equeue22/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2085" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Equeue22/app/src/main/res/drawable/ic_logout.xml" value="0.156" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Equeue22/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.2085" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Equeue22/app/src/main/res/drawable/ic_queue.xml" value="0.156" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Equeue22/app/src/main/res/drawable/ic_search.xml" value="0.156" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Equeue22/app/src/main/res/layout/activity_main.xml" value="0.2033514492753623" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Equeue22/app/src/main/res/layout/auth_activity.xml" value="0.25" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Equeue22/app/src/main/res/layout/fragment_active_queue.xml" value="0.2033514492753623" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Equeue22/app/src/main/res/layout/fragment_active_queue_root.xml" value="0.2033514492753623" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Equeue22/app/src/main/res/layout/fragment_dashboard.xml" value="0.2033514492753623" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Equeue22/app/src/main/res/layout/fragment_home.xml" value="0.2033514492753623" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Equeue22/app/src/main/res/layout/fragment_notifications.xml" value="0.2033514492753623" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Equeue22/app/src/main/res/layout/fragment_profile.xml" value="0.2033514492753623" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Equeue22/app/src/main/res/layout/fragment_profile_create_queue.xml" value="0.2033514492753623" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Equeue22/app/src/main/res/layout/fragment_profile_queue.xml" value="0.2028985507246377" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Equeue22/app/src/main/res/layout/fragment_profile_queue_not_exist.xml" value="0.2033514492753623" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Equeue22/app/src/main/res/layout/fragment_profile_root.xml" value="0.2033514492753623" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Equeue22/app/src/main/res/layout/fragment_profile_user_info.xml" value="0.2033514492753623" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Equeue22/app/src/main/res/layout/fragment_profile_user_queue_exist.xml" value="0.2033514492753623" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Equeue22/app/src/main/res/layout/fragment_queues.xml" value="0.2033514492753623" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Equeue22/app/src/main/res/layout/fragment_search.xml" value="0.2760416666666667" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Equeue22/app/src/main/res/layout/fragment_search_list.xml" value="0.2760416666666667" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Equeue22/app/src/main/res/layout/fragment_search_map.xml" value="0.2760416666666667" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Equeue22/app/src/main/res/layout/fragment_search_queue.xml" value="0.2033514492753623" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Equeue22/app/src/main/res/layout/list_item_queue.xml" value="0.2760416666666667" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Equeue22/app/src/main/res/layout/place_prediction_item.xml" value="0.2028985507246377" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Equeue22/app/src/main/res/menu/bottom_nav_menu.xml" value="0.2760416666666667" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Equeue22/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2085" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
