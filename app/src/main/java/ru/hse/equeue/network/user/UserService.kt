@@ -4,17 +4,18 @@ import okhttp3.Request
 import ru.hse.equeue.model.User
 import ru.hse.equeue.network.base.BaseOkHttpService
 import ru.hse.equeue.network.base.OkHttpConfig
+import ru.hse.equeue.network.base.Result
 
 class UserService(
     config: OkHttpConfig
 ) : BaseOkHttpService(config) {
 
-    suspend fun getUser(): User {
+    suspend fun getUser(): Result<User> {
         val request = Request.Builder()
             .get()
             .endpoint("/user/get")
             .build()
-        val response = client.newCall(request).suspendEnqueue()
-        return response.parseJsonResponse<User>()
+        return client.newCall(request).suspendEnqueue()
     }
+
 }

@@ -6,6 +6,5 @@
     android:layout_height="match_parent"
     android:layout_marginTop="5dp"
     android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
-    tools:context=".ui.queues.ActiveQueueFragment">
+    android:layout_marginRight="5dp">
 </RelativeLayout>

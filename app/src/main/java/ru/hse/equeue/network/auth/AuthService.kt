@@ -4,25 +4,24 @@ import okhttp3.Request
 import ru.hse.equeue.model.User
 import ru.hse.equeue.network.base.BaseOkHttpService
 import ru.hse.equeue.network.base.OkHttpConfig
+import ru.hse.equeue.network.base.Result
 
 class AuthService(
     config: OkHttpConfig
 ) : BaseOkHttpService(config) {
-    suspend fun signIn(googleToken: String):String {
+    suspend fun signIn(googleToken: String): Result<String> {
         val request = Request.Builder()
             .get()
             .endpoint("/auth/" + googleToken)
             .build()
-        val response = client.newCall(request).suspendEnqueue()
-        return response.parseJsonResponse<String>()
+        return client.newCall(request).suspendEnqueue()
     }
 
-    suspend fun getUser(jwtToken: String):User {
+    suspend fun getUser(jwtToken: String): Result<User> {
         val request = Request.Builder()
             .get()
             .endpoint("/user")
             .build()
-        val response = client.newCall(request).suspendEnqueue()
-        return response.parseJsonResponse<User>()
+        return client.newCall(request).suspendEnqueue()
     }
 }

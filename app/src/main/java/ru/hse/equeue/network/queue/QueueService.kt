@@ -8,13 +8,14 @@ import ru.hse.equeue.model.CreateQueue
 import ru.hse.equeue.model.Queue
 import ru.hse.equeue.network.base.BaseOkHttpService
 import ru.hse.equeue.network.base.OkHttpConfig
+import ru.hse.equeue.network.base.Result
 import java.io.File
 
 class QueueService(
     config: OkHttpConfig
 ) : BaseOkHttpService(config) {
 
-    suspend fun createQueue(queue: CreateQueue, file: File): Queue {
+    suspend fun createQueue(queue: CreateQueue, file: File): Result<Queue> {
         val body: RequestBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
             .addFormDataPart(
@@ -29,16 +30,14 @@ class QueueService(
             .endpoint("/queue")
             .build()
 
-        val response = client.newCall(request).suspendEnqueue()
-        return response.parseJsonResponse<Queue>()
+        return client.newCall(request).suspendEnqueue()
     }
 
-    suspend fun getQueueByUserId(userId:String):Queue{
+    suspend fun getQueueByUserId(userId: String): Result<Queue> {
         val request = Request.Builder()
             .get()
             .endpoint("/queue/byUserId")
             .build()
-        val response = client.newCall(request).suspendEnqueue()
-        return response.parseJsonResponse()
+        return client.newCall(request).suspendEnqueue()
     }
 }

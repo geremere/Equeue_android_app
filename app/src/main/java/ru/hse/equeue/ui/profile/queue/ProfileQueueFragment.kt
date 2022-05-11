@@ -12,7 +12,6 @@ import com.squareup.picasso.Picasso
 import ru.hse.equeue.databinding.FragmentProfileQueueBinding
 import ru.hse.equeue.ui.profile.ProfileScannerActivity
 import ru.hse.equeue.ui.profile.ProfileViewModel
-import ru.hse.equeue.ui.util.ScannerActivity
 
 class ProfileQueueFragment : Fragment() {
 

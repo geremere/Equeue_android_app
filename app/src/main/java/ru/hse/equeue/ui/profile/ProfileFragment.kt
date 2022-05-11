@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -33,6 +34,11 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initBinding()
+        userLoadedEvent()
+    }
+
+    private fun initBinding() {
         binding.logout.setOnClickListener {
             Singletons.appSettings.setCurrentToken("")
             val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -45,32 +51,31 @@ class ProfileFragment : Fragment() {
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }
-        userLoadedEvent()
     }
 
     private fun userLoadedEvent() {
-        profileModel.user.observe(viewLifecycleOwner) { user ->
-            Picasso.get().load(user.photoUrl).into(binding.profileImage);
-            binding.profileName.text = user.name
-            binding.profileEmail.text = user.email
-            val ft = parentFragmentManager.beginTransaction()
-            if (user.queue == null) {
-                val withOutQueueFragment:ProfileWithOutQueueFragment  = ProfileWithOutQueueFragment()
-                ft.replace(R.id.profile_queue_container,withOutQueueFragment)
-                ft.commit()
-            }else{
-                val withQueueFragment = ProfileWithQueueFragment()
-                ft.replace(R.id.profile_queue_container, withQueueFragment)
-                ft.commit()
-            }
-//            Picasso.get().load(user.queue.photoUrl).into();
-//            binding.queueName.text = queue.name
-//            binding.queueAddress.text = queue.address
-//
-//
-//            binding.queueByOwner.setOnClickListener {
-//                findNavController().navigate(R.id.action_navigation_profile_to_profileQueueFragment)
-//            }
+        profileModel.userResponse.observe(viewLifecycleOwner) { result ->
+            result
+                .onSuccess { user ->
+                    profileModel.setUser(user)
+                    Picasso.get().load(user.photoUrl).into(binding.profileImage);
+                    binding.profileName.text = user.name
+                    binding.profileEmail.text = user.email
+                    val ft = parentFragmentManager.beginTransaction()
+                    if (user.queue == null) {
+                        val withOutQueueFragment: ProfileWithOutQueueFragment =
+                            ProfileWithOutQueueFragment()
+                        ft.replace(R.id.profile_queue_container, withOutQueueFragment)
+                        ft.commit()
+                    } else {
+                        val withQueueFragment = ProfileWithQueueFragment()
+                        ft.replace(R.id.profile_queue_container, withQueueFragment)
+                        ft.commit()
+                    }
+                }
+                .onFailure {
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
         }
     }
 

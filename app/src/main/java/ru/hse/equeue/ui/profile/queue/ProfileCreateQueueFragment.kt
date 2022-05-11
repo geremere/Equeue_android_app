@@ -92,10 +92,10 @@ class ProfileCreateQueueFragment : Fragment() {
             }
         }
         binding.queueNameInput.addTextChangedListener {
-            createQueueModel.queue.value?.name = it.toString()
+            createQueueModel.queue.name = it.toString()
         }
         binding.queueServiceTimeInput.addTextChangedListener {
-            createQueueModel.queue.value?.status = QueueStatus(
+            createQueueModel.queue.status = QueueStatus(
                 currentUsersCount = 0,
                 serviceTime = it.toString().toDouble(),
                 totalUsersCount = 1,
@@ -110,7 +110,7 @@ class ProfileCreateQueueFragment : Fragment() {
         }
         binding.createQueueButton.setOnClickListener {
             if (binding.createQueueImage.tag != null) {
-                createQueueModel.queue.value?.owner = profileModel.user.value!!
+                createQueueModel.queue.owner = profileModel.user.value!!
                 createQueueModel.createQueue(binding.createQueueImage.tag.toString())
             }
         }
@@ -118,9 +118,16 @@ class ProfileCreateQueueFragment : Fragment() {
     }
 
     private fun queueCreateEvent() {
-        createQueueModel.queueCreated.observe(viewLifecycleOwner) {
-            profileModel.getUser()
-            findNavController().navigate(R.id.action_profileCreateQueueFragment_to_navigation_profile)
+        createQueueModel.queueResult.observe(viewLifecycleOwner) { result ->
+            result
+                .onSuccess {
+                    profileModel.getUser()
+                    findNavController().navigate(R.id.action_profileCreateQueueFragment_to_navigation_profile)
+                }.onFailure {
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+
+                }
+
         }
     }
 
@@ -143,9 +150,9 @@ class ProfileCreateQueueFragment : Fragment() {
         try {
             addresses = geocoder.getFromLocationName(searchString, 5)
             binding.queueAddressInput.setText(addresses.get(0).getAddressLine(0))
-            createQueueModel.queue.value?.address = binding.queueAddressInput.text.toString()
-            createQueueModel.queue.value?.x = addresses.get(0).latitude
-            createQueueModel.queue.value?.y = addresses.get(0).longitude
+            createQueueModel.queue.address = binding.queueAddressInput.text.toString()
+            createQueueModel.queue.x = addresses.get(0).latitude
+            createQueueModel.queue.y = addresses.get(0).longitude
         } catch (e: IOException) {
             Toast.makeText(requireContext(), "something went wrong", Toast.LENGTH_SHORT).show()
         }
