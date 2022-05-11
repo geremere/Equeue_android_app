@@ -6,6 +6,11 @@
     android:layout_height="match_parent"
     android:clipToPadding="true">
 
+    <include
+        android:id="@+id/loading"
+        layout="@layout/loading_animation"
+        android:visibility="gone" />
+
     <Button
         android:id="@+id/google_signIn"
         android:layout_width="300dp"
