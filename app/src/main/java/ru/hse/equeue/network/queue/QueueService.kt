@@ -5,6 +5,7 @@ import okhttp3.MultipartBody
 import okhttp3.Request
 import okhttp3.RequestBody
 import ru.hse.equeue.model.CreateQueue
+import ru.hse.equeue.model.ListQueueRequest
 import ru.hse.equeue.model.Queue
 import ru.hse.equeue.network.base.BaseOkHttpService
 import ru.hse.equeue.network.base.OkHttpConfig
@@ -39,5 +40,22 @@ class QueueService(
             .endpoint("/queue/byUserId")
             .build()
         return client.newCall(request).suspendEnqueue()
+    }
+
+    suspend fun getListQueue(request: ListQueueRequest): Result<List<Queue>> {
+        val request = Request.Builder()
+            .post(request.toJsonRequestBody())
+            .endpoint("/queue/list")
+            .build()
+        return client.newCall(request).suspendEnqueue()
+    }
+
+    fun getRequestParams(params: Map<String, String>): String {
+        val paramsString = StringBuilder("?")
+        params.keys.forEach { key ->
+            paramsString.append(key + "=" + params.get(key) + "&")
+        }
+        paramsString.setLength(paramsString.length - 1)
+        return paramsString.toString()
     }
 }

@@ -1,8 +1,8 @@
 package ru.hse.equeue.model
 
 data class QueueStatus(
-    val currentUsersCount: Int,
-    val totalUsersCount: Int,
+    val currentUsersCount: Double,
+    val totalUsersCount: Double,
     val serviceTime: Double,
     val status: String
 )

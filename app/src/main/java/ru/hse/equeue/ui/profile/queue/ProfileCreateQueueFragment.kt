@@ -96,9 +96,9 @@ class ProfileCreateQueueFragment : Fragment() {
         }
         binding.queueServiceTimeInput.addTextChangedListener {
             createQueueModel.queue.status = QueueStatus(
-                currentUsersCount = 0,
+                currentUsersCount = 0.0,
                 serviceTime = it.toString().toDouble(),
-                totalUsersCount = 1,
+                totalUsersCount = 1.0,
                 status = "OnPause"
             )
         }

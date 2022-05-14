@@ -42,15 +42,15 @@ class ActiveQueueFragment : Fragment() {
 
             binding.activeQueueNameTextViewItem.text = queue.name
             binding.addressActiveQueueTextViewItem.text = "Адрес: " + queue.address
-            binding.countOfPeopleActiveQueueTextViewItem.text =
-                "Место в очереди: " + queue.countOfPeople.toString()
-            binding.waitingTimeActiveQueueTextViewItem.text =
-                "Среднее время ожидания: " + String.format(
-                    "%.1f",
-                    ((queue.averageWaitingTime * queue.countOfPeople) / 60)
-                ) + " мин."
+//            binding.countOfPeopleActiveQueueTextViewItem.text =
+//                "Место в очереди: " + queue.countOfPeople.toString()
+//            binding.waitingTimeActiveQueueTextViewItem.text =
+//                "Среднее время ожидания: " + String.format(
+//                    "%.1f",
+//                    ((queue.averageWaitingTime * queue.countOfPeople) / 60)
+//                ) + " мин."
             Picasso.get().load(queue.photoUrl).into(binding.photoActiveQueueImageViewItem)
-            qrCode(queue.id)
+            qrCode(queue.id.toLong())
         }
     }
 

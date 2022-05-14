@@ -39,8 +39,6 @@ class QueuesAdapter(
             holder.itemView.tag = queue
             queueNameTextView.text = queue.name
             addressQueueTextView.text = queue.address
-            averageTimeQueueTextView.text =
-                String.format("%.1f", (queue.averageWaitingTime / 60)) + " мин."
             if (queue.photoUrl.isNotBlank()) {
                 Picasso.get().load(queue.photoUrl).into(photoQueueImageView);
             } else {

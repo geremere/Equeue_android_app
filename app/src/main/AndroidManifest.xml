@@ -24,7 +24,7 @@
             android:name=".MainActivity"
             android:exported="true"></activity>
         <activity
-            android:name=".ui.profile.ProfileScannerActivity"
+            android:name=".ui.profile.queue.ProfileScannerActivity"
             android:exported="true"></activity>
         <activity
             android:name=".ui.queues.ActiveQueueScannerActivity"

@@ -39,12 +39,12 @@ class QueueFragment : Fragment() {
         val currentQueue = queueViewModel.getQueue()
         binding.addressQueueTextViewItem.text = "Адрес: " + currentQueue.address
         binding.queueNameTextViewItem.text = currentQueue.name
-        binding.waitingTimeQueueTextViewItem.text = "Среднее время ожидания: " + String.format(
-            "%.1f",
-            ((currentQueue.averageWaitingTime * currentQueue.countOfPeople) / 60)
-        ) + " мин."
-        binding.countOfPeopleQueueTextViewItem.text =
-            "Людей в очереди: " + currentQueue.countOfPeople.toString()
+//        binding.waitingTimeQueueTextViewItem.text = "Среднее время ожидания: " + String.format(
+//            "%.1f",
+//            ((currentQueue.averageWaitingTime * currentQueue.countOfPeople) / 60)
+//        ) + " мин."
+//        binding.countOfPeopleQueueTextViewItem.text =
+//            "Людей в очереди: " + currentQueue.countOfPeople.toString()
         binding.descriptionQueueTextViewItem.text =
             "someTextsomeTextsomeTextsomeTextsomeTextsomeTextsomeTextsomeTextsomeTextsomeTextsomeTextsomeTextsomeTextsomeTextsomeTextsomeTextsomeTextsomeTextsomeTextsomeTextsomeTextsomeTextsomeTextsomeTextsomeTextsomeTextsomeTextsomeTextsomeTextsomeTextsomeTextsomeTextsomeTextsomeTextsomeText"
         Picasso.get().load(currentQueue.photoUrl).into(binding.photoQueueImageViewItem)

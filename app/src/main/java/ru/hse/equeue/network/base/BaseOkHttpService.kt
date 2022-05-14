@@ -60,7 +60,38 @@ open class BaseOkHttpService(
 
                 override fun onResponse(call: Call, response: Response) {
                     if (response.isSuccessful) {
-                        continuation.resume(Result.Success<T>(gson.fromJson(response.body!!.string(), T::class.java)))
+                        val result =  response.body?.string()
+                        try {
+                            val type = object : TypeToken<T>() {}.type
+                            continuation.resume(
+                                Result.Success<T>(
+                                    gson.fromJson(
+                                        result,
+                                        type
+                                    )
+                                )
+                            )
+//                            continuation.resume(
+//                                Result.Success<T>(
+//                                    gson.fromJson(
+//                                       result,
+//                                        T::class.java
+//                                    )
+//                                )
+//                            )
+                        } catch (e: UnsupportedOperationException) {
+                            val type = object : TypeToken<T>() {}.type
+                            continuation.resume(
+                                Result.Success<T>(
+                                    gson.fromJson(
+                                        result,
+                                        type
+                                    )
+                                )
+                            )
+                        }
+
+
                     } else {
                         continuation.resume(
                             Result.Failure(
@@ -86,14 +117,14 @@ open class BaseOkHttpService(
         return json.toRequestBody(contentType)
     }
 
-//    fun <T> Response.parseJsonResponse(typeToken: TypeToken<T>): T {
-//        try {
-//            return gson.fromJson(this.body!!.string(), typeToken.type)
-//        } catch (e: Exception) {
-//            throw ConnectException(e.message)
-//        }
-//
-//    }
+    fun <T> Response.parseJsonResponse(typeToken: TypeToken<T>): T {
+        try {
+            return gson.fromJson(this.body!!.string(), typeToken.type)
+        } catch (e: Exception) {
+            throw ConnectException(e.message)
+        }
+
+    }
 
     inline fun Response.parseErrorResponse(): String {
         try {

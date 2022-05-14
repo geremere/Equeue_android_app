@@ -36,7 +36,7 @@ class ListSearchFragment : Fragment() {
         val layoutManager = LinearLayoutManager(context)
         binding.searchListQueue.layoutManager = layoutManager
         binding.searchListQueue.adapter = adapter
-        adapter.queus = searchViewModel.getQueues()
+        adapter.queus = searchViewModel.queue
         return binding.root
     }
 

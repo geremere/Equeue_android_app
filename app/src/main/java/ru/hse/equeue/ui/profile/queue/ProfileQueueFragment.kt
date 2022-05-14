@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.squareup.picasso.Picasso
 import ru.hse.equeue.databinding.FragmentProfileQueueBinding
-import ru.hse.equeue.ui.profile.ProfileScannerActivity
 import ru.hse.equeue.ui.profile.ProfileViewModel
 
 class ProfileQueueFragment : Fragment() {
@@ -48,14 +47,14 @@ class ProfileQueueFragment : Fragment() {
             val queue = it.queue
             binding.queueNameTextViewItem.text = queue.name
             binding.addressQueueTextViewItem.text = "Адрес: " + queue.address
-            binding.countOfPeopleQueueTextViewItem.text =
-                "Место в очереди: " + queue.countOfPeople.toString()
+//            binding.countOfPeopleQueueTextViewItem.text =
+//                "Место в очереди: " + queue.countOfPeople.toString()
             binding.descriptionQueueTextViewItem.text = queue.name
-            binding.waitingTimeQueueTextViewItem.text =
-                "Среднее время ожидания: " + String.format(
-                    "%.1f",
-                    ((queue.averageWaitingTime * queue.countOfPeople) / 60)
-                ) + " мин."
+//            binding.waitingTimeQueueTextViewItem.text =
+//                "Среднее время ожидания: " + String.format(
+//                    "%.1f",
+//                    ((queue.averageWaitingTime * queue.countOfPeople) / 60)
+//                ) + " мин."
             Picasso.get().load(queue.photoUrl).into(binding.photoQueueImageViewItem)
         }
     }

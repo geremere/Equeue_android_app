@@ -1,14 +1,13 @@
 package ru.hse.equeue.model
 
 data class Queue(
-    val id: Long,
+    val id: Double,
     val photoUrl: String,
     val name: String,
     val x: Double,
     val y: Double,
     val ownerId: String,
-    val averageWaitingTime: Double,
     val address: String,
-    val countOfPeople: Int,
-    val status: QueueStatus
+    val status: QueueStatus,
+    val usersQueue: List<UserInQueue>
 )

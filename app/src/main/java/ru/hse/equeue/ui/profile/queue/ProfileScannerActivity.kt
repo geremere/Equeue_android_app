@@ -1,8 +1,7 @@
-package ru.hse.equeue.ui.profile
+package ru.hse.equeue.ui.profile.queue
 
 import android.widget.Toast
 import me.dm7.barcodescanner.zbar.Result
-import ru.hse.equeue.ui.profile.queue.ProfileQueueFragment
 import ru.hse.equeue.ui.util.ScannerActivity
 
 class ProfileScannerActivity : ScannerActivity() {
