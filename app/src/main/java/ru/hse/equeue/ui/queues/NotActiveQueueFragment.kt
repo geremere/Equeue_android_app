@@ -26,7 +26,6 @@ class NotActiveQueueFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentNotActiveQueueBinding.inflate(inflater, container, false)
-        activeQueueViewModel.getActiveQueue(profileViewModel.user.value?.id!!)
         return binding.root
     }
 

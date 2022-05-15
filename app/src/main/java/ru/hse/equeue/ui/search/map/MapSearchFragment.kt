@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,8 +26,8 @@ import ru.hse.equeue.R
 import ru.hse.equeue.databinding.FragmentSearchMapBinding
 import ru.hse.equeue.model.ListQueueRequest
 import ru.hse.equeue.model.Queue
+import ru.hse.equeue.ui.queues.ActiveQueueViewModel
 import ru.hse.equeue.ui.search.SearchViewModel
-import ru.hse.equeue.ui.search.queue.QueueViewModel
 import kotlin.math.abs
 import kotlin.math.pow
 
@@ -36,7 +35,8 @@ class MapSearchFragment() : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCl
     GoogleMap.OnCameraMoveListener {
 
     private val searchViewModel: SearchViewModel by activityViewModels()
-    private val queueViewModel: QueueViewModel by activityViewModels()
+    private val mapModel: MapViewModel by activityViewModels()
+    private val queueViewModel: ActiveQueueViewModel by activityViewModels()
 
     private val markersMap = mutableMapOf<Marker?, Queue>()
     private val mapPermissions =
@@ -53,11 +53,23 @@ class MapSearchFragment() : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCl
         }
 
 
+    private var gMap: GoogleMap? = null
+
     override fun onMapReady(googleMap: GoogleMap) {
         gMap = googleMap
-        gMap.setOnMarkerClickListener(this)
-        gMap.setOnCameraMoveListener(this)
-        getDeviceLocation()
+        gMap?.setOnMarkerClickListener(this)
+        gMap?.setOnCameraMoveListener(this)
+        if (mapModel.cameraState.value == null) {
+            getDeviceLocation()
+        } else {
+            searchViewModel.getQueues()
+            gMap!!.moveCamera(
+                CameraUpdateFactory.newLatLngZoom(
+                    LatLng(mapModel.cameraState.value!!.x, mapModel.cameraState.value!!.y),
+                    mapModel.cameraState.value!!.zoom
+                )
+            )
+        }
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -67,25 +79,22 @@ class MapSearchFragment() : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCl
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
-            gMap.isMyLocationEnabled = true
-//                gMap.uiSettings.isMyLocationButtonEnabled = false
-        }
+            gMap?.isMyLocationEnabled = true
+//                searchViewModel.gMap.value!!.uiSettings.isMyLocationButtonEnabled = false
 
+        }
     }
 
     fun addMarker(markerOptions: MarkerOptions, queue: Queue) {
-        val marker: Marker? = gMap.addMarker(markerOptions)
+        val marker: Marker? = gMap?.addMarker(markerOptions)
         markersMap.put(marker, queue)
     }
 
     private var _binding: FragmentSearchMapBinding? = null
 
-    lateinit var gMap: GoogleMap
-
 
     private val binding get() = _binding!!
     private lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
-    private val DEFAULT_ZOOM = 15.0
     private val TWO_NUM: Double = 2.0
 
     override fun onCreateView(
@@ -108,21 +117,17 @@ class MapSearchFragment() : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCl
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.toListButton.setOnClickListener {
-            findNavController().navigate(
-                R.id.action_navigation_search_to_navigation_search_list2,
-                null
-            )
+            findNavController().navigate(R.id.action_mapSearchFragment_to_listSearchFragment)
         }
         getQueuesEvent()
     }
 
     private fun initMap() {
-        var mapFragment: SupportMapFragment = SupportMapFragment.newInstance()
-        childFragmentManager.beginTransaction()
-            .replace(R.id.gMap, mapFragment)
-            .commit()
-
-        mapFragment.getMapAsync(this)
+        if (gMap == null) {
+            var mapFragment: SupportMapFragment =
+                childFragmentManager.findFragmentById(R.id.gMap) as SupportMapFragment
+            mapFragment.getMapAsync(this)
+        }
     }
 
     private fun getDeviceLocation() {
@@ -133,16 +138,18 @@ class MapSearchFragment() : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCl
             location.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     var currentLocation: Location = task.result
-                    gMap.moveCamera(
+                    mapModel.cameraState.value =
+                        MapCameraState(currentLocation.latitude, currentLocation.longitude, 15f)
+                    gMap!!.moveCamera(
                         CameraUpdateFactory.newLatLngZoom(
                             LatLng(currentLocation.latitude, currentLocation.longitude),
-                            DEFAULT_ZOOM.toFloat()
+                            mapModel.cameraState.value!!.zoom
                         )
                     )
                     searchViewModel.currentLocation.value = ListQueueRequest(
                         x = currentLocation.latitude,
                         y = currentLocation.longitude,
-                        r = 0.015060 * (40000 / TWO_NUM.pow(DEFAULT_ZOOM)) * 2
+                        r = 0.015060 * (40000 / TWO_NUM.pow(mapModel.cameraState.value!!.zoom.toDouble())) * 2
                     )
                     searchViewModel.getQueues()
                 } else {
@@ -154,7 +161,7 @@ class MapSearchFragment() : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCl
         }
     }
 
-    fun getQueuesEvent() {
+    private fun getQueuesEvent() {
         searchViewModel.queuesResult.observe(viewLifecycleOwner) {
             it.onSuccess { result ->
                 searchViewModel.setQueues(result)
@@ -175,26 +182,32 @@ class MapSearchFragment() : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCl
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {
-        queueViewModel.setQueue(markersMap.get(marker)!!)
-        findNavController().navigate(
-            R.id.action_mapSearchFragment_to_queueFragment,
-            null
-        )
+        queueViewModel.selectedQueue.value = markersMap.get(marker)!!
+        findNavController().navigate(R.id.action_mapSearchFragment_to_queueFragment)
         return false
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
 
     override fun onCameraMove() {
-        if (gMap.cameraPosition.zoom > 7 &&
-            abs(0.015060 * (40000 / TWO_NUM.pow(gMap.cameraPosition.zoom.toDouble())) * 2 - searchViewModel.currentLocation.value?.r!!) > 0.2
+        if ((gMap?.cameraPosition?.zoom!! > 6 &&
+                    0.015060 * (40000 / TWO_NUM.pow(gMap!!.cameraPosition.zoom.toDouble())) * 2 - searchViewModel.currentLocation.value!!.r > 0.2)
+            || (abs(searchViewModel.currentLocation.value!!.x - gMap!!.cameraPosition.target.latitude) > 0.2)
+            || (abs(searchViewModel.currentLocation.value!!.y - gMap!!.cameraPosition.target.longitude) > 0.2)
         ) {
             searchViewModel.currentLocation.value?.r =
-                0.015060 * (40000 / TWO_NUM.pow(gMap.cameraPosition.zoom.toDouble())) * 2
+                0.015060 * (40000 / TWO_NUM.pow(gMap!!.cameraPosition.zoom.toDouble())) * 2
+
             searchViewModel.getQueues()
         }
+        mapModel.cameraState.value = MapCameraState(
+            gMap!!.cameraPosition.target.latitude,
+            gMap!!.cameraPosition.target.longitude,
+            gMap!!.cameraPosition.zoom
+        )
     }
+
 }

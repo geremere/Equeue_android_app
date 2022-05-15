@@ -15,11 +15,13 @@ class ActiveQueueViewModel(application: Application) : AndroidViewModel(applicat
 
     private val queueService: QueueService = Singletons.queueService
 
-    private val _queueResult = MutableLiveData<Result<Queue>>()
+    private val _standToQueueResult = MutableLiveData<Result<Queue>>()
+    var outFromQueueResult = MutableLiveData<Result<Void>>()
     private val _queue = MutableLiveData<Queue>()
+    var selectedQueue = MutableLiveData<Queue>()
 
     val queue: LiveData<Queue> = _queue
-    val queueResult: LiveData<Result<Queue>> = _queueResult
+    val queueResult: LiveData<Result<Queue>> = _standToQueueResult
 
     fun setQueue(queue: Queue) {
         _queue.value = queue
@@ -27,8 +29,20 @@ class ActiveQueueViewModel(application: Application) : AndroidViewModel(applicat
 
     fun getActiveQueue(userId: String) {
         viewModelScope.launch {
-            _queueResult.value = queueService.getQueueByUserId(userId)
-
+            _standToQueueResult.value = queueService.getQueueByUserId(userId)
         }
+    }
+
+    fun standToQueue(queueId: Long) {
+        viewModelScope.launch {
+            _standToQueueResult.value = queueService.standToQueue(queueId)
+        }
+    }
+
+    fun outFromQueue() {
+        viewModelScope.launch {
+            outFromQueueResult.value = queueService.outFromQueue(_queue.value!!.id)
+        }
+
     }
 }

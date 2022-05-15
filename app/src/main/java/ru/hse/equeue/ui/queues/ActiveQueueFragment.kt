@@ -37,9 +37,9 @@ class ActiveQueueFragment : Fragment() {
     }
 
     private fun initBinding() {
-        if(activeQueueViewModel.queue.value != null){
+        if (activeQueueViewModel.queue.value != null) {
             val queue = activeQueueViewModel.queue.value!!
-
+            qrCode(queue.id)
             binding.activeQueueNameTextViewItem.text = queue.name
             binding.addressActiveQueueTextViewItem.text = "Адрес: " + queue.address
 //            binding.countOfPeopleActiveQueueTextViewItem.text =
@@ -50,7 +50,9 @@ class ActiveQueueFragment : Fragment() {
 //                    ((queue.averageWaitingTime * queue.countOfPeople) / 60)
 //                ) + " мин."
             Picasso.get().load(queue.photoUrl).into(binding.photoActiveQueueImageViewItem)
-            qrCode(queue.id.toLong())
+            binding.outFromQueueButton.setOnClickListener {
+                activeQueueViewModel.outFromQueue()
+            }
         }
     }
 

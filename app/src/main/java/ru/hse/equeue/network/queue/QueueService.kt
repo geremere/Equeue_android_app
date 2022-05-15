@@ -7,6 +7,7 @@ import okhttp3.RequestBody
 import ru.hse.equeue.model.CreateQueue
 import ru.hse.equeue.model.ListQueueRequest
 import ru.hse.equeue.model.Queue
+import ru.hse.equeue.model.QueuePage
 import ru.hse.equeue.network.base.BaseOkHttpService
 import ru.hse.equeue.network.base.OkHttpConfig
 import ru.hse.equeue.network.base.Result
@@ -42,10 +43,45 @@ class QueueService(
         return client.newCall(request).suspendEnqueue()
     }
 
+    suspend fun getListQueueByPage(
+        request: ListQueueRequest,
+        page: Int,
+        size: Int
+    ): Result<QueuePage> {
+        val request = Request.Builder()
+            .post(request.toJsonRequestBody())
+            .endpoint(
+                "/queue/list/page" + getRequestParams(
+                    mapOf(
+                        "page" to page.toString(),
+                        "size" to size.toString()
+                    )
+                )
+            )
+            .build()
+        return client.newCall(request).suspendEnqueue()
+    }
+
     suspend fun getListQueue(request: ListQueueRequest): Result<List<Queue>> {
         val request = Request.Builder()
             .post(request.toJsonRequestBody())
             .endpoint("/queue/list")
+            .build()
+        return client.newCall(request).suspendEnqueue()
+    }
+
+    suspend fun standToQueue(queueId: Long): Result<Queue> {
+        val request = Request.Builder()
+            .get()
+            .endpoint("/queue/stand" + getRequestParams(mapOf("queueId" to queueId.toString())))
+            .build()
+        return client.newCall(request).suspendEnqueue()
+    }
+
+    suspend fun outFromQueue(queueId: Long): Result<Void> {
+        val request = Request.Builder()
+            .delete()
+            .endpoint("/queue/remove" + getRequestParams(mapOf("queueId" to queueId.toString())))
             .build()
         return client.newCall(request).suspendEnqueue()
     }

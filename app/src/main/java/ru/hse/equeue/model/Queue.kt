@@ -1,7 +1,7 @@
 package ru.hse.equeue.model
 
 data class Queue(
-    val id: Double,
+    val id: Long,
     val photoUrl: String,
     val name: String,
     val x: Double,
