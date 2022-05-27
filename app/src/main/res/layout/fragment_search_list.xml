@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/navigation_search_list"
+    android:id="@+id/search_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <EditText
+        android:id="@+id/editSearch"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:drawableStart="@drawable/ic_search_32"
+        android:drawablePadding="10dp"
+        android:hint="Search"
+        android:focusedByDefault="true"
+        android:layout_margin="10dp"
+        app:cornerRadius="25dp" />
+
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="75dp"
         android:id="@+id/search_list_queue"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="50dp"
         app:layout_constraintBottom_toBottomOf="parent" />
 
-    <Button
-        android:id="@+id/to_map_button"
-        android:layout_width="70dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginBottom="100dp"
-        android:text="@string/to_map"
-        android:textColor="#FFFFFF"
-        android:textSize="11sp"
-        app:cornerRadius="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

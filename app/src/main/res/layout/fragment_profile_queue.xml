@@ -6,6 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageButton
+        android:id="@+id/shareButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="15dp"
+        android:background="#00FFFFFF"
+        android:src="@drawable/ic_baseline_share_24" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,16 +49,6 @@
             tools:text="Queue Name" />
 
         <TextView
-            android:id="@+id/descriptionQueueTextViewItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:ellipsize="end"
-            android:textSize="14sp"
-            tools:text="Очень длинное описание" />
-
-        <TextView
             android:id="@+id/addressQueueTextViewItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -82,24 +81,45 @@
             android:textSize="14sp"
             tools:text="Людей в очереди" />
 
-        <Button
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
-            android:text="Отсканировать Qr-code"
-            android:textColor="@color/white"
-            android:id="@+id/scanQrCode"/>
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Текущий статус"
+                android:textSize="14sp" />
+
+            <Spinner
+                android:id="@+id/changeStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:entries="@array/statusNames" />
+        </LinearLayout>
 
         <Button
+            android:id="@+id/scanQrCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
+            android:text="Отсканировать Qr-code"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/skipPerson"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
             android:text="Пропустить человека"
-            android:textColor="@color/white"
-            android:id="@+id/skipPerson"/>
+            android:textColor="@color/white" />
     </LinearLayout>
 </RelativeLayout>

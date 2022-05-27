@@ -2,6 +2,7 @@ package ru.hse.equeue
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -63,6 +64,7 @@ class GoogleAuthActivity : AppCompatActivity() {
                 var client = task.getResult(ApiException::class.java)
                 val intent = Intent(applicationContext, MainActivity::class.java)
                 intent.putExtra("gToken", client.idToken)
+                Log.i("gToken", client.idToken!!)
                 startActivity(intent)
             } catch (e: ApiException) {
                 Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()

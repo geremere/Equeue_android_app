@@ -5,15 +5,14 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.messaging.FirebaseMessaging
 import ru.hse.equeue.databinding.ActivityMainBinding
 import ru.hse.equeue.network.settings.Singletons
-import ru.hse.equeue.ui.profile.ProfileFragment
 import ru.hse.equeue.ui.profile.ProfileViewModel
-import ru.hse.equeue.ui.search.SearchFragment
+import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
 
@@ -45,6 +44,13 @@ class MainActivity : AppCompatActivity() {
             result
                 .onSuccess {
                     Singletons.appSettings.setCurrentToken(it)
+                    FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+                        if (!task.isSuccessful) {
+                            return@addOnCompleteListener
+                        }
+                        val token = task.result
+                        profileModel.putToken(token)
+                    }
                     profileModel.getUser()
                     setContentView(binding.root)
                     val navView: BottomNavigationView = binding.navView

@@ -15,6 +15,16 @@ class UserService(
             .get()
             .endpoint("/user/get")
             .build()
+
+        return client.newCall(request).suspendEnqueue()
+    }
+
+    suspend fun putToken(token: String): Result<Void> {
+        val request = Request.Builder()
+            .put(token.toJsonRequestBody())
+            .endpoint("/user/firebase-token")
+            .build()
+
         return client.newCall(request).suspendEnqueue()
     }
 

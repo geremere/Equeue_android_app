@@ -28,28 +28,20 @@
     </fragment>
 
     <fragment
-        android:id="@+id/queueFragment"
-        android:name="ru.hse.equeue.ui.queues.QueueInfoFragment"
-        android:label="fragment_search_queue">
-        <action
-            android:id="@+id/action_queueFragment_to_navigation_queue"
-            app:destination="@id/navigation_queue"
-            app:popUpTo="@+id/mobile_navigation"
-            app:popUpToInclusive="true" />
-    </fragment>
-    <fragment
         android:id="@+id/profileQueueFragment"
         android:name="ru.hse.equeue.ui.profile.queue.ProfileQueueFragment"
-        android:label="ProfileQueueFragment" />
+        android:label="ProfileQueueFragment" >
+        <action
+            android:id="@+id/action_profileQueueFragment_to_profileScannerFragment"
+            app:destination="@id/profileScannerFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileCreateQueueFragment"
         android:name="ru.hse.equeue.ui.profile.queue.ProfileCreateQueueFragment"
         android:label="ProfileCreateQueueFragment" >
         <action
             android:id="@+id/action_profileCreateQueueFragment_to_navigation_profile"
-            app:destination="@id/navigation_profile"
-            app:popUpTo="@id/mobile_navigation"
-            app:popUpToInclusive="true" />
+            app:destination="@id/navigation_profile" />
     </fragment>
     <fragment
         android:id="@+id/navigation_queue"
@@ -60,6 +52,9 @@
             app:destination="@id/navigation_search"
             app:popUpTo="@id/mobile_navigation"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_navigation_queue_to_activeQueueScannerFragment"
+            app:destination="@id/activeQueueScannerFragment" />
     </fragment>
     <fragment
         android:id="@+id/mapSearchFragment"
@@ -68,24 +63,68 @@
         <action
             android:id="@+id/action_mapSearchFragment_to_listSearchFragment"
             app:destination="@id/listSearchFragment"
-            app:popUpTo="@id/mobile_navigation"
-            app:popUpToInclusive="true" />
+            app:popUpTo="@id/navigation_search" />
         <action
-            android:id="@+id/action_mapSearchFragment_to_queueFragment"
-            app:destination="@id/queueFragment" />
+            android:id="@+id/action_mapSearchFragment_to_listSearchFragment2"
+            app:destination="@id/listSearchFragment2" />
+        <action
+            android:id="@+id/action_mapSearchFragment_to_queueInfoFragment"
+            app:destination="@id/queueInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/listSearchFragment"
-        android:name="ru.hse.equeue.ui.search.list.ListSearchFragment"
+        android:name="ru.hse.equeue.ui.search.list.ListFragment"
         android:label="ListSearchFragment" >
         <action
             android:id="@+id/action_listSearchFragment_to_mapSearchFragment"
             app:destination="@id/mapSearchFragment"
-            app:popUpTo="@id/mobile_navigation"
+            app:popUpTo="@id/mapSearchFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_listSearchFragment_to_queueFragment"
-            app:destination="@id/queueFragment" />
+            android:id="@+id/action_listSearchFragment_to_listSearchFragment2"
+            app:destination="@id/listSearchFragment2" />
+        <action
+            android:id="@+id/action_listSearchFragment_to_queueInfoFragment"
+            app:destination="@id/queueInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/listSearchFragment2"
+        android:name="ru.hse.equeue.ui.search.list.ListSearchFragment"
+        android:label="ListSearchFragment" >
+        <action
+            android:id="@+id/action_listSearchFragment2_to_queueInfoFragment"
+            app:destination="@id/queueInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/queueInfoFragment"
+        android:name="ru.hse.equeue.ui.search.queue.QueueInfoFragment"
+        android:label="QueueInfoFragment" >
+        <action
+            android:id="@+id/action_queueInfoFragment_to_navigation_queue"
+            app:destination="@id/navigation_queue"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/navigation_search"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileScannerFragment"
+        android:name="ru.hse.equeue.ui.profile.queue.ProfileScannerFragment"
+        android:label="ProfileScannerFragment" >
+        <action
+            android:id="@+id/action_profileScannerFragment_to_profileQueueFragment"
+            app:destination="@id/profileQueueFragment"
+            app:popUpTo="@id/profileQueueFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/activeQueueScannerFragment"
+        android:name="ru.hse.equeue.ui.queues.ActiveQueueScannerFragment"
+        android:label="ActiveQueueScannerFragment" >
+        <action
+            android:id="@+id/action_activeQueueScannerFragment_to_navigation_queue"
+            app:destination="@id/navigation_queue"
+            app:popUpTo="@id/navigation_queue"
+            app:popUpToInclusive="true" />
     </fragment>
 
 </navigation>

@@ -28,7 +28,7 @@ class ProfileWithOutQueueFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.createQueue.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_profile_to_profileCreateQueueFragment, null)
+            findNavController().navigate(R.id.action_navigation_profile_to_profileCreateQueueFragment)
         }
     }
 

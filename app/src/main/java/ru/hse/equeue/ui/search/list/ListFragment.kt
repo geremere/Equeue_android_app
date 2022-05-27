@@ -10,17 +10,17 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.hse.equeue.R
-import ru.hse.equeue.databinding.FragmentSearchListBinding
+import ru.hse.equeue.databinding.FragmentQueueListBinding
 import ru.hse.equeue.ui.queues.ActiveQueueViewModel
 import ru.hse.equeue.ui.search.SearchViewModel
 
-class ListSearchFragment : Fragment() {
+class ListFragment : Fragment() {
 
     private val searchViewModel: SearchViewModel by activityViewModels()
     private val queueViewModel: ActiveQueueViewModel by activityViewModels()
 
 
-    private var _binding: FragmentSearchListBinding? = null
+    private var _binding: FragmentQueueListBinding? = null
     private lateinit var adapter: QueuesAdapter
 
     private val binding get() = _binding!!
@@ -31,16 +31,15 @@ class ListSearchFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         searchViewModel.cleanQueues()
         searchViewModel.getPageQueues()
         getQueueByPageEvent()
-        _binding = FragmentSearchListBinding.inflate(inflater, container, false)
+        _binding = FragmentQueueListBinding.inflate(inflater, container, false)
         adapter = QueuesAdapter(findNavController(), queueViewModel, searchViewModel)
         val layoutManager = LinearLayoutManager(context)
-        binding.searchListQueue.layoutManager = layoutManager
-        binding.searchListQueue.adapter = adapter
-        adapter.queus = searchViewModel.queue
+        binding.listQueue.layoutManager = layoutManager
+        binding.listQueue.adapter = adapter
+        adapter.queues = searchViewModel.queue
         return binding.root
     }
 
@@ -59,6 +58,9 @@ class ListSearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.toMapButton.setOnClickListener {
             findNavController().navigate(R.id.action_listSearchFragment_to_mapSearchFragment)
+        }
+        binding.editSearch.setOnClickListener {
+            findNavController().navigate(R.id.action_listSearchFragment_to_listSearchFragment2)
         }
     }
 

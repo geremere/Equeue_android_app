@@ -62,6 +62,26 @@ class QueueService(
         return client.newCall(request).suspendEnqueue()
     }
 
+    suspend fun searchQueueByPage(
+        request: ListQueueRequest,
+        size: Int,
+        search:String
+    ): Result<QueuePage> {
+        val request = Request.Builder()
+            .post(request.toJsonRequestBody())
+            .endpoint(
+                "/queue/list/page" + getRequestParams(
+                    mapOf(
+                        "page" to "0",
+                        "size" to size.toString(),
+                        "search" to search
+                    )
+                )
+            )
+            .build()
+        return client.newCall(request).suspendEnqueue()
+    }
+
     suspend fun getListQueue(request: ListQueueRequest): Result<List<Queue>> {
         val request = Request.Builder()
             .post(request.toJsonRequestBody())
@@ -82,6 +102,26 @@ class QueueService(
         val request = Request.Builder()
             .delete()
             .endpoint("/queue/remove" + getRequestParams(mapOf("queueId" to queueId.toString())))
+            .build()
+        return client.newCall(request).suspendEnqueue()
+    }
+
+    suspend fun serveUser(userId: String?): Result<Queue> {
+        var endpoint = "/queue/serve"
+        if (userId != null) {
+            endpoint += getRequestParams(mapOf("userId" to userId))
+        }
+        val request = Request.Builder()
+            .get()
+            .endpoint(endpoint)
+            .build()
+        return client.newCall(request).suspendEnqueue()
+    }
+
+    suspend fun changeStatus(status: String): Result<Queue> {
+        val request = Request.Builder()
+            .get()
+            .endpoint("/queue/status" + getRequestParams(mapOf("status" to status)))
             .build()
         return client.newCall(request).suspendEnqueue()
     }
