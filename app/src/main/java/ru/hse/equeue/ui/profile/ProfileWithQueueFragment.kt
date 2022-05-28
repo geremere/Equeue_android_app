@@ -39,7 +39,14 @@ class ProfileWithQueueFragment : Fragment() {
         binding.queueName.text = profileModel.user.value?.queue?.name
         binding.queueAddress.text = profileModel.user.value?.queue?.address
         binding.queueStatus.text = profileModel.user.value?.queue?.status?.status
+        var url :String= profileModel.user.value?.queue?.photoUrl.toString()
+//        if(url.contains("https")) {
+//            Picasso.get().load(url).into(binding.queueImage);
+//        }else{
+//            Picasso.get().load(url.replace("http","https")).into(binding.queueImage);
+//        }
         Picasso.get().load(profileModel.user.value?.queue?.photoUrl).into(binding.queueImage);
+
     }
 
 

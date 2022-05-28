@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
+        android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -23,12 +24,6 @@
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan"
-            android:exported="true" />
-        <activity
-            android:name=".ui.profile.queue.ProfileScannerFragment"
-            android:exported="true" />
-        <activity
-            android:name=".ui.queues.ActiveQueueScannerFragment"
             android:exported="true" />
         <activity
             android:name=".GoogleAuthActivity"
