@@ -67,7 +67,10 @@ class MapSearchFragment() : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCl
             searchViewModel.getQueues()
             gMap!!.moveCamera(
                 CameraUpdateFactory.newLatLngZoom(
-                    LatLng(searchViewModel.mapPosition.value!!.lat, searchViewModel.mapPosition.value!!.lng),
+                    LatLng(
+                        searchViewModel.mapPosition.value!!.lat,
+                        searchViewModel.mapPosition.value!!.lng
+                    ),
                     searchViewModel.mapPosition.value!!.zoom
                 )
             )
@@ -141,25 +144,34 @@ class MapSearchFragment() : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCl
             val location = mFusedLocationProviderClient.lastLocation
             location.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    var currentLocation: Location = task.result
-                    gMap!!.moveCamera(
-                        CameraUpdateFactory.newLatLngZoom(
-                            LatLng(currentLocation.latitude, currentLocation.longitude),
-                            15f
+                    if (task.result != null) {
+                        var currentLocation: Location = task.result
+                        gMap!!.moveCamera(
+                            CameraUpdateFactory.newLatLngZoom(
+                                LatLng(currentLocation.latitude, currentLocation.longitude),
+                                15f
+                            )
                         )
-                    )
-                    searchViewModel.currentLocation.value = ListQueueRequest(
-                        x = currentLocation.latitude,
-                        y = currentLocation.longitude,
-                        r = getRadius()
-                    )
+                        searchViewModel.currentLocation.value = ListQueueRequest(
+                            x = currentLocation.latitude,
+                            y = currentLocation.longitude,
+                            r = getRadius()
+                        )
 
-                    searchViewModel.mapPosition.value = MapPosition(
-                        lat = currentLocation.latitude,
-                        lng = currentLocation.longitude,
-                        zoom = 15f
-                    )
-                    searchViewModel.getQueues()
+                        searchViewModel.mapPosition.value = MapPosition(
+                            lat = currentLocation.latitude,
+                            lng = currentLocation.longitude,
+                            zoom = 15f
+                        )
+                        searchViewModel.getQueues()
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            "Пожалуйста включите gps",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        findNavController().navigate(R.id.navigation_queue)
+                    }
                 } else {
                     Toast.makeText(requireContext(), "some problems", Toast.LENGTH_SHORT).show()
                 }
@@ -204,7 +216,7 @@ class MapSearchFragment() : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerCl
         val visibleRegion = gMap!!.getProjection().getVisibleRegion()
         val lng = visibleRegion.farRight.longitude - visibleRegion.farLeft.longitude
         val lat = visibleRegion.farRight.latitude - visibleRegion.nearRight.latitude
-        return  sqrt(
+        return sqrt(
             lat.pow(2.0) + lng.pow(2.0)
         ) / 2 + 0.01
     }
