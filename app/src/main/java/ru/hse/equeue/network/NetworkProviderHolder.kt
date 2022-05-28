@@ -14,7 +14,7 @@ object NetworkProviderHolder {
 
     val provider: OkHttpProvider by lazy<OkHttpProvider> {
         val config = OkHttpConfig(
-            baseUrl = "https://equeue.hutsharing.com/api",
+            baseUrl = "https://equeue-server.herokuapp.com/api",
             client = createHttpClient(),
             gson = Gson()
         )
